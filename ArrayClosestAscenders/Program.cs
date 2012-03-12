@@ -16,35 +16,63 @@ namespace Codility.ArrayClosestAscenders
 
             for (int k = 0; k < A.Length; k++)
             {
+                int j = k;
+                int m = k;
                 int minDistance = int.MaxValue;
 
-                for (int j = 0; j < A.Length; j++)
+                while (j < A.Length -1)
                 {
-                    int negativeJ *= j-k;
-                    if (k != j && A[j] > A[k])
+                    j++;
+                    m--;
+
+                    if (A[j] > A[k])
                     {
                         int currentDistance = Math.Abs(k - j);
+
                         if (currentDistance < minDistance)
                             minDistance = Math.Abs(k - j);
 
-                        if (minDistance == 1 || j > k)
+                        if (j > k)
                             break;
                     }
 
-                    if (k != negativeJ && A[negativeJ] > A[k])
+                    if (m >= 0 && A[m] > A[k])
                     {
-                        int currentDistance = Math.Abs(k - j);
+                        int currentDistance = Math.Abs(k - m);
+
                         if (currentDistance < minDistance)
                             minDistance = Math.Abs(k - j);
-
-                        if (minDistance == 1 || j > k)
-                            break;
                     }
 
+                    if (minDistance == 1)
+                        break;
                 }
 
                 R[k] = (minDistance != int.MaxValue) ? minDistance : 0;
             }
+
+            #region OLD CODE
+            //for (int k = 0; k < A.Length; k++)
+            //{
+            //    int minDistance = int.MaxValue;
+
+            //    for (int j = 0; j < A.Length; j++)
+            //    {
+            //        if (k != j && A[j] > A[k])
+            //        {
+            //            int currentDistance = Math.Abs(k - j);
+            //            if (currentDistance < minDistance)
+            //                minDistance = Math.Abs(k - j);
+
+            //            if (minDistance == 1 || j > k)
+            //                break;
+            //        }
+            //    }
+
+            //    R[k] = (minDistance != int.MaxValue) ? minDistance : 0;
+            //}
+            #endregion
+
             return R;
         }
     }
