@@ -7,73 +7,52 @@ namespace Codility.ArrayClosestAscenders
     {
         private const int MAX_RANGE = 50000;
 
-        public static int[] ArrayClosestAscenders(int[] A)
+        public static int[] ArrayClosestAscenders(int[] inputArray)
         {
             // Check parameters
-            if (A.Length > MAX_RANGE) throw new ArgumentOutOfRangeException("A should be inferior or equal to " + MAX_RANGE);
+            if (inputArray == null) throw new ArgumentNullException("inputArray can't be null");
+            if (inputArray.Length > MAX_RANGE) throw new ArgumentOutOfRangeException("inputArray should be inferior or equal to " + MAX_RANGE);
 
-            int[] R = new int[A.Length];
+            int[] outputArray = new int[inputArray.Length];
 
-            for (int k = 0; k < A.Length; k++)
+            for (int k = 0; k < inputArray.Length; k++)
             {
-                int j = k;
-                int m = k;
+                int j = k;  // j is a posivite index which increase to get the next ascender.
+                int m = k;  // m is a posivite index which decrease to get the next ascender.
                 int minDistance = int.MaxValue;
+                int currentDistance = int.MaxValue;
 
-                while (j < A.Length -1)
+                while (j < inputArray.Length -1)
                 {
                     j++;
                     m--;
 
-                    if (A[j] > A[k])
+                    if (m >= 0 && inputArray[m] > inputArray[k])
                     {
-                        int currentDistance = Math.Abs(k - j);
+                        currentDistance = Math.Abs(k - m);
 
                         if (currentDistance < minDistance)
-                            minDistance = Math.Abs(k - j);
-
-                        if (j > k)
-                            break;
+                            minDistance = currentDistance;
                     }
 
-                    if (m >= 0 && A[m] > A[k])
+                    if (inputArray[j] > inputArray[k])
                     {
-                        int currentDistance = Math.Abs(k - m);
+                        currentDistance = Math.Abs(k - j);
 
                         if (currentDistance < minDistance)
-                            minDistance = Math.Abs(k - j);
+                            minDistance = currentDistance;
+
+                        break;
                     }
 
                     if (minDistance == 1)
                         break;
                 }
 
-                R[k] = (minDistance != int.MaxValue) ? minDistance : 0;
+                outputArray[k] = (minDistance != int.MaxValue) ? minDistance : 0;
             }
 
-            #region OLD CODE
-            //for (int k = 0; k < A.Length; k++)
-            //{
-            //    int minDistance = int.MaxValue;
-
-            //    for (int j = 0; j < A.Length; j++)
-            //    {
-            //        if (k != j && A[j] > A[k])
-            //        {
-            //            int currentDistance = Math.Abs(k - j);
-            //            if (currentDistance < minDistance)
-            //                minDistance = Math.Abs(k - j);
-
-            //            if (minDistance == 1 || j > k)
-            //                break;
-            //        }
-            //    }
-
-            //    R[k] = (minDistance != int.MaxValue) ? minDistance : 0;
-            //}
-            #endregion
-
-            return R;
+            return outputArray;
         }
     }
 }

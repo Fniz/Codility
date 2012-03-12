@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Codility.ArrayClosestAscenders;
+using System.Linq;
 
 namespace UnitTests
 {
@@ -24,6 +25,21 @@ namespace UnitTests
 
             int[] expectedR = new int[] { 7, 1, 1, 4, 1, 2, 1, 1, 0 };
             CollectionAssert.AreEqual(expectedR, R);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException), "inputArray should be inferior or equal to 50000")]
+        public void Throws_ArgumentOutOfRangeException()
+        {
+            int[] A = Enumerable.Range(0,50001).ToArray();
+            int[] R = Program.ArrayClosestAscenders(A);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "inputArray can't be null")]
+        public void Throws_ArgumentNullException()
+        {
+            int[] R = Program.ArrayClosestAscenders(null);
         }
     }
 }
