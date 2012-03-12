@@ -33,6 +33,9 @@ namespace Codility.ArrayClosestAscenders
 
                         if (currentDistance < minDistance)
                             minDistance = currentDistance;
+
+                        if (minDistance == 1)
+                            break;
                     }
 
                     if (inputArray[j] > inputArray[k])
@@ -44,9 +47,6 @@ namespace Codility.ArrayClosestAscenders
 
                         break;
                     }
-
-                    if (minDistance == 1)
-                        break;
                 }
 
                 outputArray[k] = (minDistance != int.MaxValue) ? minDistance : 0;

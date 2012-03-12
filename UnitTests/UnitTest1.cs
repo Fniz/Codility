@@ -2,12 +2,25 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Codility.ArrayClosestAscenders;
 using System.Linq;
+using System.Diagnostics;
+using System.Threading;
 
 namespace UnitTests
 {
     [TestClass]
     public class UnitTest1
     {
+
+        private static Random _random;
+        private const int MIN_INT = -1000000000;
+        private const int MAX_INT =  1000000000;
+
+        [TestInitialize]
+        public void Init()
+        {
+            _random = new Random();
+        }
+
         [TestMethod]
         public void Test_Sample_ArrayClosestAscenders()
         {
@@ -28,6 +41,14 @@ namespace UnitTests
         }
 
         [TestMethod]
+        [Timeout(1000)]
+        public void Compute_Array_In_Less_1_Second()
+        {
+            int[] A = Enumerable.Range(0, 50000).Select(i => GetRandomNumber(MIN_INT, MAX_INT)).ToArray();
+            int[] R = Program.ArrayClosestAscenders(A);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "inputArray should be inferior or equal to 50000")]
         public void Throws_ArgumentOutOfRangeException()
         {
@@ -40,6 +61,11 @@ namespace UnitTests
         public void Throws_ArgumentNullException()
         {
             int[] R = Program.ArrayClosestAscenders(null);
+        }
+
+        private static int GetRandomNumber(int min, int max)
+        {
+          return _random.Next(min, max); 
         }
     }
 }
